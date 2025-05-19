@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Музыкальная кнопка</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        
+        #musicButton {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        #musicButton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        #musicButton:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <button id="musicButton">Включить музыку</button>
+    
+    <audio id="audioPlayer" preload="auto">
+        <!-- Замените ссылку на вашу музыку -->
+        <source src="https://www.dropbox.com/scl/fi/6m3bh5oqk6kxra094qbnw/43656.mp3?rlkey=zc681j5g7ed0pb94om7olc2hy&st=fmc9l6j6&dl=1" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
+    
+    <script>
+        const musicButton = document.getElementById('musicButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+        
+        // Фиксируем громкость на максимум
+        audioPlayer.volume = 1.0;
+        
+        // Отключаем возможность изменения громкости
+        Object.defineProperty(audioPlayer, 'volume', {
+            writable: false,
+            value: 1.0
+        });
+        
+        musicButton.addEventListener('click', function() {
+            // Всегда воспроизводим с начала при нажатии
+            audioPlayer.currentTime = 0;
+            audioPlayer.play();
+            
+            // Меняем текст кнопки после нажатия
+            musicButton.textContent = 'Музыка включена!';
+            musicButton.style.backgroundColor = '#4CAF50';
+            
+            // Делаем кнопку неактивной после нажатия
+            musicButton.disabled = true;
+        });
+    </script>
+</body>
+</html>
